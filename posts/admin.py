@@ -6,5 +6,5 @@ from .models import Category, Post
 admin.site.register(Category)
 admin.site.register(Post)
 
-admin.site.site_name = 'Custom Commands admin'
+admin.site.site_header = 'Custom Commands admin'
 admin.site.site_title = 'Custom Commands'
