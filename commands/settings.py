@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     # third party apps
     'channels',
     'rest_framework',
+    # custom app
+    'chat',
     'posts',
 ]
 
@@ -56,7 +58,7 @@ ROOT_URLCONF = 'commands.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,7 +72,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'commands.wsgi.application'
-ASGI_APPLICATION = "routing.application"
+ASGI_APPLICATION = 'commands.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -122,11 +124,19 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels.layers.InMemoryChannelLayer",
+#         "TEST_CONFIG": {
+#             "expiry": 100500,
+#         },
+#     },
+# }
 CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer",
-        "TEST_CONFIG": {
-            "expiry": 100500,
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
         },
     },
 }
